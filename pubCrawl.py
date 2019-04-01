@@ -2,8 +2,8 @@
 
 '''
  
- 	PyFuscation.py
-    This python3 script obfuscates powershell function, variable and parameters in an attempt to bypass AV blacklists 
+	PyFuscation.py
+	This python3 script obfuscates powershell function, variable and parameters in an attempt to bypass AV blacklists 
 
 '''
 import os
@@ -80,15 +80,20 @@ def shoNuff (ip):
 
 	global oDir
 	oFile = oDir + "/" + ip + "-shodan"
-
+	
 	if args.csv:
 		oFileJGZ = oFile + ".json.gz"
-		oFileCSV = oFile + ".csv"
 		helper.printP("Shodan 	: " + oFileJGZ)	
-		helper.printP("Shodan 	: " + oFileCSV)	
-
 		cmd = "shodan download " + oFile + " net:" + ip
-		helper.muxER(cmd)
+		res = helper.muxER(cmd)
+		
+		# We need to check to see if the download worked
+		if not os.path.isfile(oFileJGZ):
+			helper.printR("Issue with download: " + str(res))
+			return
+
+		oFileCSV = oFile + ".csv"
+		helper.printP("Shodan 	: " + oFileCSV)	
 		cmd = "shodan convert " + oFileJGZ + " csv"
 		helper.muxER(cmd)
 
@@ -182,7 +187,10 @@ def main():
 			validateHost(ip)
 			helper.printW("Fin		: " + ip)
 			print('')
-
+			# This is if u have a rate limit for API calls
+			helper.printW("Sleeping for a second ...")
+			time.sleep( 2 )
+			
 	helper.printP("Output Files are located at: " + oDir + "/")
 
 if __name__ == "__main__":
@@ -228,7 +236,8 @@ if __name__ == "__main__":
     # Working directory
     ts = time.strftime("%m%d%Y_%H_%M_%S", time.gmtime())
     oDir = os.path.abspath(os.path.dirname(__file__)) + "/DATA/" + ts
-    os.mkdir( oDir );
+    if not os.path.exists(oDir):
+        os.makedirs(oDir);
     helper.printP("Working directory: " + oDir)
     print('')
 
