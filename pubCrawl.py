@@ -65,11 +65,15 @@ def cenSYS (ip):
 				except KeyError:
 					continue
 
-			status = host[str(port)][str(proto)]['get']['status_code']
-			title = host[str(port)][str(proto)]['get']['title']
-
-			helper.loggER("Title 	: " + str(title),oFileTXT,args.verbose)
-			helper.loggER("Status 	: " + str(status),oFileTXT,args.verbose)
+			try:
+				if 'title' in host[str(port)][str(proto)]['get'].keys():
+					title = host[str(port)][str(proto)]['get']['title']
+					helper.loggER("Title 	: " + str(title),oFileTXT,args.verbose)
+				if 'status_code' in host[str(port)][str(proto)]['get'].keys():
+					status = host[str(port)][str(proto)]['get']['status_code']
+					helper.loggER("Status 	: " + str(status),oFileTXT,args.verbose)
+			except Exception as error:
+				continue
 
 def shoNuff (ip):
 	api = shodan.Shodan(shodan_apiKEY)
