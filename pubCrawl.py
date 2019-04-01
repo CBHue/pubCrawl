@@ -221,7 +221,7 @@ if __name__ == "__main__":
         exit()  
     
     # Load the keys
-    PSconfigFile = "/home/cb/Documents/api-keys.ini"
+    PSconfigFile = os.path.abspath(os.path.dirname(__file__)) + "/api-keys.ini"
     if not os.path.isfile(PSconfigFile):
         helper.printR("Check API key File: " + PSconfigFile)
         exit()    	
