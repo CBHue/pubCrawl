@@ -14,6 +14,7 @@ def loggER(out,*lvl):
 				print('\033[91m{0:16}: {1}\033[00m'.format("[*] " + x, out[x]))
 		else:
 			printR(out)
+			
 	elif "STATUS" in lvl:
 		if type(out) == dict:
 			for x in out:
