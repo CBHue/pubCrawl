@@ -196,6 +196,12 @@ def validateHost (network):
 			cidr = "/32"
 			for ip in expandedIPList:
 				confirmIP(ip, cidr)
+				helper.printW("Fin		: " + ip)
+				print('')
+				# This is if u have a rate limit for API calls
+				helper.printW("Sleeping for a second ...")
+				time.sleep( 2 )
+				print('')
 	else:
 		helper.printY("Single IP 	: " + network)
 		matchWork = network	
