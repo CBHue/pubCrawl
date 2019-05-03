@@ -1,6 +1,11 @@
 # pubCrawl
 ![alt text](https://github.com/CBHue/pubCrawl/blob/master/pubCrawl.png)
 
+<pre>You will need to install shodan and censys:
+  pip3 install shodan
+  pip3 install censys
+</pre>
+
 Use Shodan &amp; Censys to perform port lookup on a list of ip's
 
 python3 pubCrawl.py -scv --txt --csv --ipList ./pubIP.txt
@@ -14,5 +19,5 @@ optional arguments:
   -c               check Censys.io
   --csv            csv output
   --txt            txt output
-  --ipList IPLIST  Target ip addresses
+  --ipList IP.txt  File with Target ip addresses [one per line]
 </pre>
