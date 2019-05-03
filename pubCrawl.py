@@ -161,7 +161,7 @@ def confirmIP (matchWork, cidr):
 		return False
 
 	if not ip.is_private:
-		helper.printG("Public IP   : " + matchWork)
+		helper.printG("Public IP   : " + ipFull)
 		if args.shodan:
 			shoNuff(matchWork)		
 		if args.censys:
