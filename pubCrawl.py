@@ -150,6 +150,7 @@ def shoNuff (ip):
 def confirmIP (matchWork, cidr):	
 	# Lets see if this is a real IP
 	ipFull = str(matchWork) + cidr
+	matchWork = str(matchWork)
 
 	try:
 		ip = ipaddress.ip_address(matchWork)
