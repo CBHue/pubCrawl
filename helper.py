@@ -20,6 +20,14 @@ def loggER(out,*lvl):
 				print('\033[93m{0:16}: {1}\033[00m'.format("[*] " + x, out[x]))
 		else:
 			printY(out)
+
+	elif "other" in lvl:
+		if type(out) == dict:
+			for x in out:
+				print('\033[95m{0:16}: {1}\033[00m'.format("[*] " + x, out[x]))
+		else:
+			printY(out)			
+
 	else:
 		if type(out) == dict:
 			for x in out:
