@@ -1,10 +1,8 @@
 import os
 import re
+import dns
 import socket
 import ipaddress
-
-from nslookup import Nslookup
-import dns
 
 import util.osWork 
 import util.helper as helper
