@@ -56,7 +56,7 @@ def main():
 	# SATGE 1 : If we have work to do let do it
 	workS1 = len(hostSET)
 	if workS1 > 0:
-		helper.printP("STAGE1 Validating IP/Hosts : " + '\033[94m' + str(workS1) + '\033[0m' )
+		helper.printP("STAGE1 Validating IP/Hosts     : " + '\033[94m' + str(workS1) + '\033[0m' )
 		for hst in hostSET:
 			ipDIC = hostWork.validateHost(hst)
 			if ipDIC:
