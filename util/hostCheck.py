@@ -92,7 +92,7 @@ def validateHost (network):
 			publicHostMap[key] = value
 
 	# At this time we have a private and pulic hostMAP ... returning the public one for shodan/censysIO
-	return publicHostMap
+	return publicHostMap, privateHostMap
 
 def confirmIP (matchWork, cidr):	
 	# Lets see if this is a real IP
