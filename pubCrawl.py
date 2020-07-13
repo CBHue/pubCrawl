@@ -32,7 +32,8 @@ def main():
 	SoFileCSV = oDir + "/Shodan-IO.csv"
 	CoFileCSV = oDir + "/Censys-IO.csv"
 	CoFileTXT = oDir + "/Censys-IO.txt"
-	LogFile   = oDir + "/Resolved-Hosts.txt"
+	pubLog    = oDir + "/Resolved-Public-Hosts.txt"
+	privLog   = oDir + "/Resolved-Private-Hosts.txt"
 
 	#  SATGE 0 : Gather the targets 
 	if args.hostName:
