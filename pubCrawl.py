@@ -73,8 +73,6 @@ def main():
 		helper.printP("Remaining Valid Targets        : " + '\033[94m' + str(workS2) + '\033[0m')
 
 		if (args.shodan or args.censys):
-			helper.printP("STAGE2: Shodan/Censys IP/Hosts : " + '\033[94m' + str(workS2) + '\033[0m')
-
 			for key, value in hostDIC.items():
 				Results = {}
 
