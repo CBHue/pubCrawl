@@ -2,8 +2,11 @@
 ![alt text](https://github.com/CBHue/pubCrawl/blob/master/pubCrawl.png)
 
 <pre>You will need to install shodan and censys:
-  pip3 install shodan
+  sudo apt install python3-pip
+  pip3 install selenium
   pip3 install censys
+  pip3 install shodan
+  pip3 install nslookup
 </pre>
 
 Use Shodan &amp; Censys to perform port lookup on a list of ip's
