@@ -6,7 +6,7 @@
   pip3 install selenium
   pip3 install censys
   pip3 install shodan
-  pip3 install nslookup
+  pip3 install dnspython
 </pre>
 
 Use Shodan &amp; Censys to perform port lookup on a list of ip's
