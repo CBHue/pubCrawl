@@ -11,7 +11,6 @@
 
 Use Shodan &amp; Censys to perform port lookup on a list of ip's
 
-
 <pre>
 python3 pubCrawl.py --host example.com
 python3 pubCrawl2.py --hostList sampleHostList.txt --full
