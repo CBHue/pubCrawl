@@ -68,10 +68,9 @@ def main():
 	# SATGE 2 : Now we have a list of hosts to ip
 	workS2 = len(hostDIC)
 	InvalidTargets = workS1 - workS2
+	helper.printP("Invalid Dropped Targets        : " + '\033[94m' + str(InvalidTargets) + '\033[0m')
+	helper.printP("Remaining Valid Targets        : " + '\033[94m' + str(workS2) + '\033[0m')
 	if workS2 > 0:
-		helper.printP("Invalid Dropped Targets        : " + '\033[94m' + str(InvalidTargets) + '\033[0m')
-		helper.printP("Remaining Valid Targets        : " + '\033[94m' + str(workS2) + '\033[0m')
-
 		if (args.shodan or args.censys):
 			for key, value in hostDIC.items():
 				Results = {}
