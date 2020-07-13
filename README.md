@@ -11,16 +11,20 @@
 
 Use Shodan &amp; Censys to perform port lookup on a list of ip's
 
-python3 pubCrawl.py -scv --txt --csv --ipList ./pubIP.txt
+python3 pubCrawl.py --host example.com
+python3 pubCrawl2.py --hostList sampleHostList.txt --full
 
-<pre>usage: pubCrawl.py [-h] [-v] [-s] [-c] [--csv] [--txt] [--ipList IPLIST]
+<pre>usage: pubCrawl.py [-h] [-s] [-c] [--sshot] [--csv] [--txt] [--full] [--hostList HOSTLIST] [--host HOSTNAME] [--combine]
 
 optional arguments:
-  -h, --help       show this help message and exit
-  -v               Output to screen
-  -s               Check Shodan.io
-  -c               check Censys.io
-  --csv            csv output
-  --txt            txt output
-  --ipList IP.txt  File with Target ip addresses [one per line]
+  -h, --help           show this help message and exit
+  -s                   Check Shodan.io
+  -c                   Check Censys.io
+  --sshot              Take Screenshot
+  --csv                csv output
+  --txt                txt output
+  --full               Censys + Shodan + Screenshot + Combine
+  --hostList HOSTLIST  Host list
+  --host HOSTNAME      Individual host
+  --combine            Combine output types
 </pre>
