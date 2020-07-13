@@ -27,7 +27,7 @@ def validateHost (network):
 		if match.group(2) == '/32':
 			ip = confirmIP(matchWork, cidr)
 			if not ip:
-				return
+				return False, False
 			hostMAP[ip] = network
 
 		# its not a network ... expand it
@@ -55,7 +55,7 @@ def validateHost (network):
 			matchWork = network	
 			ip = confirmIP(matchWork, cidr)
 			if not ip:
-				return
+				return False, False
 			# Lets see if we can do a reverse lookup
 			name = network
 			try:
@@ -74,7 +74,7 @@ def validateHost (network):
 
 			if sip is "NXDOMAIN":
 				helper.printR("No IP found : " + network)
-				return
+				return False, False
 
 			helper.printG("Resolved IP : " + sip)
 			ip = confirmIP(sip, cidr)
