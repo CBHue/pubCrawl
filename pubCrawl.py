@@ -135,7 +135,7 @@ def main():
 				print('')
 
 	# Done !
-	helper.printP("Output Files are located at: " + oDir + "/")
+	helper.printY("Output Files are located at: " + oDir + "/")
 
 if __name__ == "__main__":
     
@@ -189,7 +189,7 @@ if __name__ == "__main__":
     oDir = os.path.abspath(os.path.dirname(__file__)) + "/DATA/" + ts
     if not os.path.exists(oDir):
         os.makedirs(oDir);
-    helper.printP("Working directory: " + oDir)
+    helper.printY("Working directory: " + oDir)
     print('')
 
     main()
