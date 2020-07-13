@@ -1,8 +1,8 @@
 import os
 import re
-import dns
 import socket
 import ipaddress
+import dns.resolver
 
 import util.osWork 
 import util.helper as helper
