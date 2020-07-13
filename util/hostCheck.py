@@ -2,22 +2,12 @@ import os
 import re
 import socket
 import ipaddress
+
 import dns.resolver
 
 import util.osWork 
 import util.helper as helper
 
-def resolveHName (hName):
-	ip = "NXDOMAIN"
-
-	try:
-		result = dns.resolver.query(hName, 'A')
-		for ipval in result:
-			ip = ipval.to_text()
-	except Exception as e:
-		ip = "NXDOMAIN"
-
-	return str(ip) 
 
 def validateHost (network):
 	hostMAP = {}
@@ -33,22 +23,15 @@ def validateHost (network):
 		helper.printW("Subnet : " + match.group(2))
 		cidr = match.group(2)
 
-		# is it one host or more
+		# if it a single Host add it to the hostMAP
 		if match.group(2) == '/32':
-			if ipaddress.ip_address(matchWork).is_private:
-				helper.printR("Private Network ... Skipping")
-				return
-			
 			ip = confirmIP(matchWork, cidr)
 			if not ip:
 				return
 			hostMAP[ip] = network
 
-		else:
-			if ipaddress.ip_address(matchWork).is_private:
-				helper.printR("Private Network ... Skipping")
-				return
-			
+		# its not a network ... expand it
+		else:	
 			helper.printY("Expanding Network: " + network)
 			expandedhostFile = ipaddress.ip_network(network)
 			cidr = "/32"
@@ -61,10 +44,11 @@ def validateHost (network):
 				time.sleep( 2 )
 				print('')
 	
-	# its not a network/cidr so its either a single IP or Hostname
+	# its not in cidr notation
 	else:
 		cidr = "/32"
 		match = re.search(r'(\d+.\d+.\d+.\d+)', network)
+		# If its a single IP add it to hostMAP 
 		if match:
 			helper.printG("Single IP 	: " + network)
 
@@ -82,7 +66,7 @@ def validateHost (network):
 
 			hostMAP[ip] = name
 
-		# Must be a hostname
+		# Try to resolve the hostname ... 
 		else:
 			cidr = "/32"
 			helper.printW("Hostname 	: " + network)
@@ -97,7 +81,18 @@ def validateHost (network):
 			if ip:
 				hostMAP.update({ip : network})
 
-	return hostMAP
+	# lets seperate private and public hosts
+	privateHostMap = {}
+	publicHostMap  = {}
+	for key, value in hostMAP.items():
+		if ipaddress.ip_address(key).is_private:
+			helper.printR("Address/Netmask is Private: "+ key)
+			privateHostMap[key] = value
+		else:
+			publicHostMap[key] = value
+
+	# At this time we have a private and pulic hostMAP ... returning the public one for shodan/censysIO
+	return publicHostMap
 
 def confirmIP (matchWork, cidr):	
 	# Lets see if this is a real IP
@@ -112,9 +107,18 @@ def confirmIP (matchWork, cidr):
 	except Exception as e:
 		helper.printR("[validateHost] " + str(e) + " " + ipFull)
 		return False
-	if ipaddress.ip_address(matchWork).is_private:
-		helper.printR("Address/Netmask is Private: "+ ipFull)
-		return False
-		
+
 	# If we got here the IP is valid.
 	return matchWork
+
+def resolveHName (hName):
+	ip = "NXDOMAIN"
+
+	try:
+		result = dns.resolver.query(hName, 'A')
+		for ipval in result:
+			ip = ipval.to_text()
+	except Exception as e:
+		ip = "NXDOMAIN"
+
+	return str(ip) 
