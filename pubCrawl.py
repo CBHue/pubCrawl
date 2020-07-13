@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
 '''
- 
-	pubCrawl.py
+ 	pubCrawl.py
 	This python3 script runs Shodan and Censys api calls
-	Currently screenshots when running censys testing 
-
 '''
+
 import os
 import re
 import sys
