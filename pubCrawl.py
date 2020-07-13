@@ -25,6 +25,7 @@ def main():
 
 	chromeSHOT = set()
 	hostSET = set()
+	privHostDIC = {}
 	hostDIC = {}
 
 	SoFileTXT = oDir + "/Shodan-IO.txt"
@@ -58,12 +59,15 @@ def main():
 	if workS1 > 0:
 		helper.printP("STAGE1 Validating IP/Hosts     : " + '\033[94m' + str(workS1) + '\033[0m' )
 		for hst in hostSET:
-			ipDIC = hostWork.validateHost(hst)
-			if ipDIC:
-				hostDIC = {**ipDIC, **hostDIC}
+			pubHSTs, privHSTs = hostWork.validateHost(hst)
+			if pubHSTs:
+				hostDIC = {**pubHSTs, **hostDIC}
+			if privHSTs:
+				privHostDIC = {**privHSTs, **privHostDIC}
 
 	# Write out the current hosts
-	helper.logTXT(hostDIC,LogFile)
+	helper.logTXT(hostDIC,pubLog)
+	helper.logTXT(privHostDIC,privLog)
 
 	# SATGE 2 : Now we have a list of hosts to ip
 	workS2 = len(hostDIC)
