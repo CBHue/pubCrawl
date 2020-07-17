@@ -134,8 +134,28 @@ def main():
 				time.sleep( shleep )
 				print('')
 
+	# --sshot without checking censys or shodan
+	if (args.sshot and not (args.shodan or args.censys)):
+
+		hostDIC = {**hostDIC, **privHostDIC}
+		# We are just going to try screenshotting both HTTP and HTTPs
+
+		Count = len(hostDIC)
+		c = 0
+		helper.printP("Screenshoting     : " + '\033[94m' + str(Count) + " Hosts")
+		for key, value in hostDIC.items():
+			c = c + 1
+			helper.printP("Screenshot " + str(c) + " / " + str(Count) + "  : " + '\033[94m' + value + '\033[0m')
+			
+			u = "http://" + value			
+			ssFile = oDir + "/" + value + "_http_screenshot.png"
+			chromeShot.chromeShot(u,ssFile)
+			
+			u = "https://" + value
+			ssFile = oDir + "/" + value + "_https_screenshot.png"
+			chromeShot.chromeShot(u,ssFile)
+
 	# Done !
-	print('')
 	helper.printY("Output Files are located at: " + oDir + "/")
 
 if __name__ == "__main__":
@@ -194,4 +214,3 @@ if __name__ == "__main__":
     print('')
 
     main()
-
