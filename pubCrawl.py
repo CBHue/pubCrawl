@@ -142,10 +142,10 @@ def main():
 
 		Count = len(hostDIC)
 		c = 0
-		helper.printP("Screenshoting     : " + '\033[94m' + str(Count) + " Hosts")
+		helper.printW("Screenshoting     : " + '\033[94m' + str(Count) + " Hosts")
 		for key, value in hostDIC.items():
 			c = c + 1
-			helper.printP("Screenshot " + str(c) + " / " + str(Count) + "  : " + '\033[94m' + value + '\033[0m')
+			helper.printW("Screenshot " + str(c) + " / " + str(Count) + "  : " + '\033[94m' + value + '\033[0m')
 			
 			u = "http://" + value			
 			ssFile = oDir + "/" + value + "_http_screenshot.png"
