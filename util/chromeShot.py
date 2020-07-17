@@ -19,5 +19,5 @@ def chromeShot (url,f):
 		driver.quit()
 		print("Screenshot Done! : " + url)
 	except Exception as e:
-		print("\033[91m" + "Screenshot Error : " + url + "\033[00m")
+		print("\033[91m" + "[!] Screenshot Error : " + url + "\033[00m")
 		
