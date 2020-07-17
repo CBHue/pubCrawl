@@ -158,6 +158,7 @@ def main():
 	# Done !
 	print('')
 	helper.printY("Output Files are located at: " + oDir + "/")
+	print('')
 
 if __name__ == "__main__":
     
