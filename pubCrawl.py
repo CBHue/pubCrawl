@@ -142,7 +142,7 @@ def main():
 
 		Count = len(hostDIC)
 		c = 0
-		helper.printW("Screenshoting     : " + '\033[94m' + str(Count) + " Hosts")
+		helper.printW("Screenshoting     : " + '\033[94m' + str(Count) + " Hosts" + '\033[0m')
 		for key, value in hostDIC.items():
 			c = c + 1
 			helper.printW("Screenshot " + str(c) + " / " + str(Count) + "  : " + '\033[94m' + value + '\033[0m')
