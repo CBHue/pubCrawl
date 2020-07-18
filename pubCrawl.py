@@ -145,7 +145,7 @@ def main():
 		helper.printW2("Screenshoting Host(s)", str(Count))
 		for key, value in hostDIC.items():
 			c = c + 1
-			helper.printW("Screenshot " + str(c) + " / " + str(Count) + "  : " + '\033[94m' + value + '\033[0m')
+			helper.printW2("Screenshot " + str(c) + " / " + str(Count) , value)
 			
 			u = "http://" + value			
 			ssFile = oDir + "/" + value + "_http_screenshot.png"

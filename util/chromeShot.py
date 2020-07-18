@@ -1,6 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+def printR(msg,val): print("\033[91m" +'{0:35}: {1}'.format("[!] " + msg, val + '\033[00m')) 
+def printG(msg,val): print("\033[92m" +'{0:35}: {1}'.format("[*] " + msg, val + '\033[00m')) 
+
 def chromeShot (url,f):
 	chrome_options = Options()
 	chrome_options.add_argument("--headless")
@@ -17,7 +20,8 @@ def chromeShot (url,f):
 		driver.get(url)
 		driver.get_screenshot_as_file(f)
 		driver.quit()
-		print("Screenshot Done! : " + url)
+		printG("Screenshot Done!", url) 
 	except Exception as e:
-		print("\033[91m" + "[!] Screenshot Error  : " + url + "\033[00m")
+		printR("Screenshot Error ...", url) 
+
 		
