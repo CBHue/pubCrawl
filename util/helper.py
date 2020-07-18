@@ -8,6 +8,13 @@ def printY(out): print("\033[93m{}\033[00m" .format("[+] " + out))
 def printP(out): print("\033[95m{}\033[00m" .format("[-] " + out)) 
 def printW(out): print("[~] " + out)
 
+def printR2(msg,val): print("\033[91m" +'{0:35}: \033[96m{1}'.format("[!] " + msg, val + '\033[00m')) 
+def printG2(msg,val): print("\033[92m" +'{0:35}: \033[96m{1}'.format("[*] " + msg, val + '\033[00m')) 
+def printY2(msg,val): print("\033[93m" +'{0:35}: \033[96m{1}'.format("[+] " + msg, val + '\033[00m')) 
+def printP2(msg,val): print("\033[95m" +'{0:35}: \033[96m{1}'.format("[-] " + msg, val + '\033[00m')) 
+def printW2(msg,val): print('{0:35}: \033[96m{1}'.format("[~] " + msg, val + '\033[00m')) 
+
+
 def loggER(out,*lvl):			
 	if "WARN" in lvl:
 		if type(out) == dict:

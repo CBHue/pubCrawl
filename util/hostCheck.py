@@ -12,15 +12,15 @@ import util.helper as helper
 def validateHost (network):
 	hostMAP = {}
 
-	helper.printW("Validating 	: " +  network)
+	helper.printW2("Validating", network)
 	cidr = ""
 
 	# is this a ip/cidr
 	match = re.search(r'(\d+.\d+.\d+.\d+)(/\d+)', network)
 	if match:
 		matchWork = match.group(1)
-		helper.printW("IP Addr: " + matchWork)
-		helper.printW("Subnet : " + match.group(2))
+		helper.printW2("IP Addr", matchWork)
+		helper.printW2("Subnet", match.group(2))
 		cidr = match.group(2)
 
 		# if it a single Host add it to the hostMAP
@@ -50,7 +50,7 @@ def validateHost (network):
 		match = re.search(r'(\d+.\d+.\d+.\d+)', network)
 		# If its a single IP add it to hostMAP 
 		if match:
-			helper.printG("Single IP 	: " + network)
+			helper.printG2("Single IP", network)
 
 			matchWork = network	
 			ip = confirmIP(matchWork, cidr)
@@ -69,14 +69,14 @@ def validateHost (network):
 		# Try to resolve the hostname ... 
 		else:
 			cidr = "/32"
-			helper.printW("Hostname 	: " + network)
+			helper.printW2("Hostname", network)
 			sip = resolveHName(network)
 
-			if sip is "NXDOMAIN":
-				helper.printR("No IP found : " + network)
+			if sip == "NXDOMAIN":
+				helper.printR2("No IP found", network)
 				return False, False
 
-			helper.printG("Resolved IP : " + sip)
+			helper.printG2("Resolved IP",sip)
 			ip = confirmIP(sip, cidr)
 			if ip:
 				hostMAP.update({ip : network})
@@ -86,7 +86,7 @@ def validateHost (network):
 	publicHostMap  = {}
 	for key, value in hostMAP.items():
 		if ipaddress.ip_address(key).is_private:
-			helper.printR("Address/Netmask is Private: "+ key)
+			helper.printR2("Address/Netmask is Private", key)
 			privateHostMap[key] = value
 		else:
 			publicHostMap[key] = value
@@ -102,7 +102,7 @@ def confirmIP (matchWork, cidr):
 	try:
 		ip = ipaddress.ip_address(matchWork)
 	except ValueError:
-		helper.printR("Address/Netmask is invalid: "+ ipFull)
+		helper.printR2("Address/Netmask is invalid", ipFull)
 		return False
 	except Exception as e:
 		helper.printR("[validateHost] " + str(e) + " " + ipFull)

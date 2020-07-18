@@ -17,13 +17,13 @@ def banner():
       DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD  
       """))
 
-def printY(out): print("\033[93m{}\033[00m" .format("[+] " + out)) 
+def printY(msg,val): print("\033[93m" +'{0:35}: \033[93m{1}'.format("[+] " + msg, val + '\033[00m')) 
 
 def title():
     print("------------------------------------------------------------------------------------------------------")
-    printY("Tool      : pubCrawl")
-    printY("Author    : CB Hue")
-    printY("Twitter   : @_cbhue_")
-    printY("github    : https://github.com/CBHue")
+    printY("Tool","pubCrawl")
+    printY("Author","CB Hue")
+    printY("Twitter","@_cbhue_")
+    printY("github","https://github.com/CBHue")
     print("------------------------------------------------------------------------------------------------------")
     print("")

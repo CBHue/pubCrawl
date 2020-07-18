@@ -56,7 +56,7 @@ def main():
 	# SATGE 1 : If we have work to do let do it
 	workS1 = len(hostSET)
 	if workS1 > 0:
-		helper.printP("STAGE1 Validating IP/Hosts     : " + '\033[94m' + str(workS1) + '\033[0m' )
+		helper.printP2("STAGE1 Validating IP/Hosts", str(workS1))
 		for hst in hostSET:
 			pubHSTs, privHSTs = hostWork.validateHost(hst)
 			if pubHSTs:
@@ -71,8 +71,8 @@ def main():
 	# SATGE 2 : Now we have a list of hosts to ip
 	workS2 = len(hostDIC)
 	InvalidTargets = workS1 - workS2
-	helper.printP("Invalid Dropped Targets        : " + '\033[94m' + str(InvalidTargets) + '\033[0m')
-	helper.printP("Remaining Valid Targets        : " + '\033[94m' + str(workS2) + '\033[0m')
+	helper.printP2("Invalid Dropped Targets", str(InvalidTargets))
+	helper.printP2("Remaining Valid Targets", str(workS2))
 	if workS2 > 0:
 		if (args.shodan or args.censys):
 			for key, value in hostDIC.items():
@@ -96,7 +96,7 @@ def main():
 							# replace ip with hostname if available
 							hname = hostDIC.get(key, match.group(1))
 							u = u.replace(key, hname)
-							helper.printP("Taking Screen Shots : " + u)
+							helper.printP2("Taking Screen Shots",u)
 
 							ssFile = oDir + "/" + hname + "_" + match.group(2) + "_shodan_screenshot.png"
 							chromeShot.chromeShot(u,ssFile)
@@ -119,18 +119,18 @@ def main():
 							# replace ip with hostname if available
 							hname = hostDIC.get(key, match.group(1))
 							u = u.replace(key, hname)
-							helper.printP("Taking Screen Shots : " + u)
+							helper.printP2("Taking Screen Shots",u)
 
 							ssFile = oDir + "/" + hname + "_" + match.group(2) + "_censys_screenshot.png"
 							chromeShot.chromeShot(u,ssFile)
 
 				workS2 = workS2 - 1
-				helper.printW("Fin		: " + value)
-				helper.printW("Hosts Left	: " + '\033[94m' + str(workS2) + '\033[0m')
+				helper.printW2("Fin",value)
+				helper.printW2("Hosts Left",str(workS2))
 
 				# Note: All API methods are rate-limited to 1 request/ second. 
 				shleep = 5
-				helper.printW("Sleeping    : " + '\033[94m' + str(shleep) + '\033[0m' + " second(s) ...")
+				helper.printW2("Sleeping for ", str(shleep))
 				time.sleep( shleep )
 				print('')
 
@@ -142,7 +142,7 @@ def main():
 
 		Count = len(hostDIC)
 		c = 0
-		helper.printW("Screenshoting     : " + '\033[94m' + str(Count) + " Hosts" + '\033[0m')
+		helper.printW2("Screenshoting Host(s)", str(Count))
 		for key, value in hostDIC.items():
 			c = c + 1
 			helper.printW("Screenshot " + str(c) + " / " + str(Count) + "  : " + '\033[94m' + value + '\033[0m')
@@ -157,7 +157,7 @@ def main():
 
 	# Done !
 	print('')
-	helper.printY("Output Files are located at: " + oDir + "/")
+	helper.printY2("Output Files are located at:", oDir + "/")
 	print('')
 
 if __name__ == "__main__":
@@ -212,7 +212,7 @@ if __name__ == "__main__":
     oDir = os.path.abspath(os.path.dirname(__file__)) + "/DATA/" + ts
     if not os.path.exists(oDir):
         os.makedirs(oDir);
-    helper.printY("Working directory: " + oDir)
+    helper.printY2("Working directory", oDir)
     print('')
 
     main()
