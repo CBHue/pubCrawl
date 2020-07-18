@@ -56,9 +56,11 @@ def main():
 	# SATGE 1 : If we have work to do let do it
 	workS1 = len(hostSET)
 	if workS1 > 0:
+		count = 0
 		helper.printP2("STAGE1 Validating IP/Hosts", str(workS1))
 		for hst in hostSET:
-			pubHSTs, privHSTs = hostWork.validateHost(hst)
+			count = count + 1
+			pubHSTs, privHSTs = hostWork.validateHost(hst,count,workS1)
 			if pubHSTs:
 				hostDIC = {**pubHSTs, **hostDIC}
 			if privHSTs:
@@ -89,14 +91,16 @@ def main():
 
 					if scrSHOT:
 						# Now lets see if we want and need to take screenshots
-
+						count = 0
+						shots = len(scrSHOT)
 						for u in scrSHOT:
+							count = count + 1
 							match = re.search(r'.*://(.*):(.*)',u)
 							
 							# replace ip with hostname if available
 							hname = hostDIC.get(key, match.group(1))
 							u = u.replace(key, hname)
-							helper.printP2("Taking Screen Shots",u)
+							helper.printP2("Taking Screen Shots [" + str(count) + "/" + str(shots) + "]",u)
 
 							ssFile = oDir + "/" + hname + "_" + match.group(2) + "_shodan_screenshot.png"
 							chromeShot.chromeShot(u,ssFile)
@@ -112,14 +116,16 @@ def main():
 
 					if scrSHOT:
 						# Now lets see if we want and need to take screenshots
-
+						count = 0
+						shots = len(scrSHOT)
 						for u in scrSHOT:
+							count = count + 1
 							match = re.search(r'.*://(.*):(.*)',u)
 							
 							# replace ip with hostname if available
 							hname = hostDIC.get(key, match.group(1))
 							u = u.replace(key, hname)
-							helper.printP2("Taking Screen Shots",u)
+							helper.printP2("Taking Screen Shots [" + str(count) + "/" + str(shots) + "]",u)
 
 							ssFile = oDir + "/" + hname + "_" + match.group(2) + "_censys_screenshot.png"
 							chromeShot.chromeShot(u,ssFile)
@@ -145,7 +151,7 @@ def main():
 		helper.printW2("Screenshoting Host(s)", str(Count))
 		for key, value in hostDIC.items():
 			c = c + 1
-			helper.printW2("Screenshot " + str(c) + " / " + str(Count) , value)
+			helper.printW2("Screenshot [" + str(c) + "/" + str(Count) + "]" , value)
 			
 			u = "http://" + value			
 			ssFile = oDir + "/" + value + "_http_screenshot.png"

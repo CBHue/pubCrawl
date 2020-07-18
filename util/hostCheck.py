@@ -9,10 +9,10 @@ import util.osWork
 import util.helper as helper
 
 
-def validateHost (network):
+def validateHost (network, count, total):
 	hostMAP = {}
 
-	helper.printW2("Validating", network)
+	helper.printW2("Validating [" + str(count) + "/" + str(total) + "]", network)
 	cidr = ""
 
 	# is this a ip/cidr
