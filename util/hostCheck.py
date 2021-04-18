@@ -71,6 +71,7 @@ def validateHost (network, count, total, domain):
 			cidr = "/32"
 			if domain:
 				network = network + "." + domain
+				helper.printW2("Domain", domain)
 				
 			helper.printW2("Hostname", network)
 			sip = resolveHName(network)
