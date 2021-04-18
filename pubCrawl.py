@@ -21,11 +21,12 @@ import api.censei as censei
 
 def main():
 
-	chromeSHOT = set()
-	hostSET = set()
+	chromeSHOT  = set()
+	hostSET     = set()
 	privHostDIC = {}
-	hostDIC = {}
-
+	hostDIC     = {}
+	domain      = {}
+	
 	SoFileTXT = oDir + "/Shodan-IO.txt"
 	SoFileCSV = oDir + "/Shodan-IO.csv"
 	CoFileCSV = oDir + "/Censys-IO.csv"
@@ -60,7 +61,7 @@ def main():
 		helper.printP2("STAGE1 Validating IP/Hosts", str(workS1))
 		for hst in hostSET:
 			count = count + 1
-			pubHSTs, privHSTs = hostWork.validateHost(hst,count,workS1)
+			pubHSTs, privHSTs = hostWork.validateHost(hst,count,workS1,domain)
 			if pubHSTs:
 				hostDIC = {**pubHSTs, **hostDIC}
 			if privHSTs:
@@ -186,6 +187,7 @@ if __name__ == "__main__":
     parser.add_argument("--hostList", 	dest="hostList",  	help="Host list")
     parser.add_argument("--host", 		dest="hostName",  	help="Individual host")
     parser.add_argument("--combine",	dest="combine", 	help="Combine output types",					action="store_true")
+    parser.add_argument("--domain",	    dest="domain", 	    help="Add domain to hostnames")
     args = parser.parse_args()
 
     # Its either a hostfile or a single host
