@@ -9,7 +9,7 @@ import util.osWork
 import util.helper as helper
 
 
-def validateHost (network, count, total):
+def validateHost (network, count, total, domain):
 	hostMAP = {}
 
 	helper.printW2("Validating [" + str(count) + "/" + str(total) + "]", network)
@@ -69,6 +69,9 @@ def validateHost (network, count, total):
 		# Try to resolve the hostname ... 
 		else:
 			cidr = "/32"
+			if domain:
+				network = network + "." + domain
+				
 			helper.printW2("Hostname", network)
 			sip = resolveHName(network)
 
