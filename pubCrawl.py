@@ -25,7 +25,7 @@ def main():
 	hostSET     = set()
 	privHostDIC = {}
 	hostDIC     = {}
-	domain      = {}
+	domain      = args.domain
 	
 	SoFileTXT = oDir + "/Shodan-IO.txt"
 	SoFileCSV = oDir + "/Shodan-IO.csv"
