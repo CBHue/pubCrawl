@@ -40,15 +40,18 @@ def loggER(out,*lvl):
 	else:
 		if type(out) == dict:
 			for x in out:
-				print('\x1b[1;34m' + x, out[x] + '\x1b[0m' + '\n')
+				y = str(out[x])
+				y = y.replace("\n", "\n\t")
+				print('[~] \x1b[1;34m' + x.rstrip() + '\x1b[0m', y.rstrip() )
 		else:			
 			printG(out) 
 
 def logTXT(out,oF):
 	with open(oF, 'a', newline='') as oHandle:
 		for x in out:
-			oHandle.write('{0:20}: {1}'.format("[*] " + x, out[x]))
-			oHandle.write('\n')
+			y = str(out[x])
+			y = y.replace("\n", "\n\t")
+			oHandle.write('{0:20}: {1}'.format("[*] " + x, y))
 		if len(out) > 0:
 			oHandle.write("\n\n")
 	oHandle.close()
