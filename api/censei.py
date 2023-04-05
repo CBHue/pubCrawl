@@ -1,5 +1,4 @@
-import re
-import censys.ipv4
+from censys.search import CensysHosts
 import util.helper as helper
 
 def cenSYS (ip,cID,cCRET):
@@ -9,58 +8,67 @@ def cenSYS (ip,cID,cCRET):
 	ssList = set()
 
 	try:
-		c = censys.ipv4.CensysIPv4(cID,cCRET)
+		c = CensysHosts(cID,cCRET)
 		host = c.view(ip)
-		helper.printW("CensysIO 	: " + ip)
+		helper.printY2("CensysIO", ip)
 	except Exception as e:
-		helper.printR("CensysIO 	: " + ip + " : " + str(e))
+		helper.printR("CensysIO" + ip + " : " + str(e))
 		return censysDICT, ssList
 
+	# Host IP
 	censysDICT["Host"] 		= host['ip']
+
+	# OS
+	if 'operating_system' in host.keys():
+		censysDICT["osName"] = host['operating_system']['product'] + "_" + host['operating_system']['vendor']
+
+	# DNS Names
+	if 'dns' in host.keys():
+		censysDICT["dnsNames"] = host['dns']['names']
+
+	# Network info
 	if 'autonomous_system' in host.keys():
-		censysDICT["Network"] 	= host['autonomous_system']['routed_prefix']
+		censysDICT["Network"] 	= host['autonomous_system']['bgp_prefix']
 		censysDICT["Desc"] 		= host['autonomous_system']['description']
 		censysDICT["Name"] 		= host['autonomous_system']['name']	
-	censysDICT["Proto"] 	= str(host.get('protocols', 'n/a'))	
-	censysDICT["Ports"] 	= str(host.get('ports', 'n/a'))	
 
-	# HTTP Ports 	
-	for p in host['protocols']:
-		match = re.search(r'(\d+)\/(\w+)', p)
-		if match:
-			port  = match.group(1)
-			proto = match.group(2)
+	
+	# Services
+	#Number of ports identified
+	pCount = len(host['services'])
+	ports = ""
+	services = ""
 
-			# Add to the screen shot list if its http
-			if re.search('http', proto, re.IGNORECASE):
-				url = proto + "://" + ip + ":" + port
-				ssList.add(url)
-			
-			if proto == "https":
-				try:
-					otherNames = host[str(port)][str(proto)]['tls']['certificate']['parsed']['names']
-					dns_names  = host[str(port)][str(proto)]['tls']['certificate']['parsed']['extensions']['subject_alt_name']['dns_names']
-					censysDICT[str(port) + "_Names"] 		= str(otherNames)
-					censysDICT[str(port) + "_DNS"] 		= str(dns_names)
+	# add each port to its own Dictionary
+	for x in range(pCount):
+		
+		service = host['services'][x]['extended_service_name']
+		services = service + "," + services
+		port  = host['services'][x]['port']
+		ports = str(port) + "," + ports
+		
+		censysDICT["Ports"] 					= host['services'][x]['port']
+		censysDICT[str(port) + "_Services"] 	= host['services'][x]['extended_service_name']
+		censysDICT[str(port) + "_Banner"] 		= host['services'][x]['banner']	
 
-				except KeyError:
-					continue
+		if 'http' in host['services'][x].keys():
+			url = host['services'][x]['http']['request']['uri']
 
-			try:
-				if 'title' in host[str(port)][str(proto)]['get'].keys():
-					title = host[str(port)][str(proto)]['get']['title']
-					censysDICT[str(port) + "_title"] 		= str(title)
-				if 'status_code' in host[str(port)][str(proto)]['get'].keys():
-					status = host[str(port)][str(proto)]['get']['status_code']
-					censysDICT[str(port) + "_status"] 		= str(status)
-				if 'metadata' in host[str(port)][str(proto)]['get'].keys():
-					metadata = host[str(port)][str(proto)]['get']['metadata']
-					censysDICT[str(port) + "_metadata"] 		= str(metadata)
-				if 'headers' in host[str(port)][str(proto)]['get'].keys():
-					headers = host[str(port)][str(proto)]['get']['headers']
-					censysDICT[str(port) + "_headers"] 		= str(headers)
-			except Exception as error:
-				continue
+			# Replace the last "/"
+			last_char_index = url.rfind("/")
+			url = url[:last_char_index] + ":" + url[last_char_index+1:]
+
+			ssList.add(url + str(port))
+		
+
+	# Replace the last ","
+	last_char_index = ports.rfind(",")
+	ports = ports[:last_char_index] + "" + ports[last_char_index+1:]
+	censysDICT["Ports"] 	= ports	
+
+	# Replace the last ","
+	last_char_index = services.rfind(",")
+	services = services[:last_char_index] + "" + services[last_char_index+1:]
+	censysDICT["Proto"] 	= services
 
 	return censysDICT, ssList
-
