@@ -9,7 +9,7 @@ def shoNuff (ip,sKEY):
 	ssList = set()
 
 	try:
-		helper.printW("Shodan 	: " + ip)
+		helper.printY2("Shodan", ip)
 		host = api.host(ip)
 
 	except shodan.APIError as e:
