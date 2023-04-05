@@ -80,7 +80,10 @@ def main():
 		if (args.shodan or args.censys):
 			for key, value in hostDIC.items():
 				Results = {}
-
+				
+				print('')
+				helper.printY2("Working on IP | Host:", key + " | " + value)
+				
 				# SHODAN
 				if args.shodan:
 					Results, scrSHOT = shoNuff.shoNuff(key,sKEY)
