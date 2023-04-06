@@ -58,7 +58,7 @@ def main():
 	workS1 = len(hostSET)
 	if workS1 > 0:
 		count = 0
-		helper.printP2("STAGE1 Validating IP/Hosts", str(workS1))
+		helper.printP2("Validating IP/Hosts", str(workS1))
 		for hst in hostSET:
 			count = count + 1
 			pubHSTs, privHSTs = hostWork.validateHost(hst,count,workS1,domain)
