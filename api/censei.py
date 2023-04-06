@@ -20,17 +20,20 @@ def cenSYS (ip,cID,cCRET):
 
 	# OS
 	if 'operating_system' in host.keys():
-		censysDICT["osName"] = host['operating_system']['product'] + "_" + host['operating_system']['vendor']
+		product = host['operating_system'].get('product', 'n/a')
+		vendor  = host['operating_system'].get('vendor', 'n/a')
+		censysDICT["osName"] = product + "_" + vendor
 
 	# DNS Names
 	if 'dns' in host.keys():
-		censysDICT["dnsNames"] = host['dns']['names']
+		censysDICT["dnsNames"] = host['dns'].get('names', 'n/a')
+
 
 	# Network info
 	if 'autonomous_system' in host.keys():
-		censysDICT["Network"] 	= host['autonomous_system']['bgp_prefix']
-		censysDICT["Desc"] 		= host['autonomous_system']['description']
-		censysDICT["Name"] 		= host['autonomous_system']['name']	
+		censysDICT["Network"] 	= host['autonomous_system'].get('bgp_prefix', 'n/a')
+		censysDICT["Desc"] 		= host['autonomous_system'].get('description', 'n/a')
+		censysDICT["Name"] 		= host['autonomous_system'].get('name', 'n/a')	
 
 	
 	# Services
@@ -42,14 +45,13 @@ def cenSYS (ip,cID,cCRET):
 	# add each port to its own Dictionary
 	for x in range(pCount):
 		
-		service = host['services'][x]['extended_service_name']
+		service = host['services'][x].get('extended_service_name', 'n/a')
 		services = service + "," + services
-		port  = host['services'][x]['port']
+		port  = host['services'][x].get('port', 'n/a')
 		ports = str(port) + "," + ports
 		
-		censysDICT["Ports"] 					= host['services'][x]['port']
-		censysDICT[str(port) + "_Services"] 	= host['services'][x]['extended_service_name']
-		censysDICT[str(port) + "_Banner"] 		= host['services'][x]['banner']	
+		censysDICT[str(port) + "_Services"] 	= service
+		censysDICT[str(port) + "_Banner"] 		= host['services'][x].get('banner', 'n/a')	
 
 		if 'http' in host['services'][x].keys():
 			url = host['services'][x]['http']['request']['uri']
@@ -60,7 +62,6 @@ def cenSYS (ip,cID,cCRET):
 
 			ssList.add(url + str(port))
 		
-
 	# Replace the last ","
 	last_char_index = ports.rfind(",")
 	ports = ports[:last_char_index] + "" + ports[last_char_index+1:]
