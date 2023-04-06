@@ -181,16 +181,14 @@ if __name__ == "__main__":
 
     # parse all the args
     parser = ArgumentParser()
-    parser.add_argument("-s",   		dest="shodan",    	help="Check Shodan.io",     					action="store_true")
-    parser.add_argument("-c",   		dest="censys",    	help="Check Censys.io",     					action="store_true")
-    parser.add_argument("--sshot",   	dest="sshot",    	help="Take Screenshot",     					action="store_true")
-    parser.add_argument("--csv",		dest="csv",  		help="csv output",  	  						action="store_true")
-    parser.add_argument("--txt",		dest="txt",  		help="txt output",		  						action="store_true")
-    parser.add_argument("--full",		dest="full",  		help="Censys + Shodan + Screenshot + Combine", 	action="store_true")
+    parser.add_argument("-s",   	dest="shodan",    	help="Check Shodan.io",			action="store_true")
+    parser.add_argument("-c",   	dest="censys",    	help="Check Censys.io",			action="store_true")
+    parser.add_argument("--sshot",   	dest="sshot",    	help="Take Screenshot",			action="store_true")
+    parser.add_argument("--csv",	dest="csv",  		help="csv output",  			action="store_true")
+    parser.add_argument("--txt",	dest="txt",  		help="txt output",			action="store_true")
     parser.add_argument("--hostList", 	dest="hostList",  	help="Host list")
-    parser.add_argument("--host", 		dest="hostName",  	help="Individual host")
-    parser.add_argument("--combine",	dest="combine", 	help="Combine output types",					action="store_true")
-    parser.add_argument("--domain",	    dest="domain", 	    help="Add domain to hostnames")
+    parser.add_argument("--host", 	dest="hostName",	help="Individual host")
+    parser.add_argument("--domain",	dest="domain",		help="Add domain to hostnames")
     args = parser.parse_args()
 
     # Its either a hostfile or a single host
@@ -214,7 +212,7 @@ if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read(PSconfigFile)
     sKEY  = config.get('shodan.io', 'shodan_apiKEY',	fallback='Not-Configured')
-    cID   = config.get('censys.io', 'censys_apiID',		fallback='Not-Configured')
+    cID   = config.get('censys.io', 'censys_apiID',	fallback='Not-Configured')
     cCRET = config.get('censys.io', 'censys_apiSECRET',	fallback='Not-Configured')
     
     # Setup Working directory
